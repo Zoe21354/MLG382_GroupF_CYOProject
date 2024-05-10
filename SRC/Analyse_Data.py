@@ -1,4 +1,3 @@
-
 # Import Libraries
 import csv                                              # Read and Write to CSV files
 import pandas as pd                                     # Manipulation and analysis of data
@@ -9,7 +8,6 @@ from sklearn.model_selection import train_test_split    # Splits the raw_data in
 import warnings                                         # Ignores any future warnings
 warnings.filterwarnings('ignore')   
 
-
 # Read Unclean CSV Files
 raw_data = pd.read_csv('Data/Original Data/credit_risk_raw_data.csv')
 raw_data_copy = raw_data.copy()
@@ -17,9 +15,7 @@ raw_data_copy = raw_data.copy()
 validation_data = pd.read_csv('Data/Original Data/validation_data.csv')
 validation_data_copy = validation_data.copy()
 
-
 # ======================================================= A. DATA ANALYSIS PROCESSES ======================================================= #
-
 # 1. Dataset Analysis
 # Dataset Attributes:
 print(f"Raw Data Columns: {raw_data_copy.columns}\n")
@@ -105,14 +101,11 @@ print(f"Validation Data Shape:\n{validation_data_copy.shape}")
         - Frequency of data
         - Mean, mode, median, and range
 
-
-    Nominal data: person_home_ownership, loan_intent, cb_person_default_on_file
 """
 # Frequency and Bar charts of each Independent variable and the Dependant variable:
     #Get the count for each category in the variable
     #Normalize the data to get the proportion of the different categories in the variable (each count is divided by the total number of values)
     #Plot a bar chart to visually display the data
-
 
 #Dependent Variable
 count = raw_data_copy['loan_status'].value_counts(normalize = True)
@@ -123,87 +116,10 @@ plt.show()
 
 """
 #Insight Gained:
-    - 
+    - 0.65 or 65% of the people were approved for a loan (i.e Loan_Status = Yes)
+    - 0.35 or 35% of the people were not approved for a loan (i.e Loan_Status = No)
 """
 
-
-#Independent Variable (Ordinal)
-#loan_percent_income
-plt.figure(1)
-plt.subplot(121)
-raw_data_copy.dropna()
-sns.distplot(raw_data_copy['loan_percent_income'])
-plt.title('Distribution of Loan Income Percentage')
-plt.xlabel('Loan Income Percentage')
-plt.ylabel('Density')
-plt.subplot(122)
-boxplot =raw_data_copy['loan_percent_income'].plot.box()
-boxplot.set_title('Box Plot of Loan Income Percentage')
-boxplot.set_xlabel('Density')
-plt.show()
-
-"""
-#Insight Gained:
-    - 
-"""
-
-#loan_int_rate
-plt.figure(1)
-plt.subplot(121)
-raw_data_copy.dropna()
-sns.distplot(raw_data_copy['loan_int_rate'])
-plt.title('Distribution of Loan Interest Rate')
-plt.xlabel('Loan Rate')
-plt.ylabel('Density')
-plt.subplot(122)
-boxplot =raw_data_copy['loan_int_rate'].plot.box()
-boxplot.set_title('Box Plot of Loan Interest Rate')
-boxplot.set_xlabel('Density')
-plt.show()
-
-"""
-#Insight Gained:
-    - 
-"""
-
-
-#person_income
-plt.figure(1)
-plt.subplot(121)
-raw_data_copy.dropna()
-sns.distplot(raw_data_copy['person_income'])
-plt.title('Distribution of Income')
-plt.xlabel('Loan Rate')
-plt.ylabel('Density')
-plt.subplot(122)
-boxplot =raw_data_copy['person_income'].plot.box()
-boxplot.set_title('Box Plot of Income')
-boxplot.set_xlabel('Density')
-plt.show()
-
-"""
-#Insight Gained:
-    - 
-"""
-
-#loan_amnt
-plt.figure(1)
-plt.subplot(121)
-raw_data_copy.dropna()
-sns.distplot(raw_data_copy['loan_amnt'])
-plt.title('Distribution of Loan Amount')
-plt.xlabel('Loan Rate')
-plt.ylabel('Density')
-plt.subplot(122)
-boxplot =raw_data_copy['loan_amnt'].plot.box()
-boxplot.set_title('Box Plot of Loan Amount')
-boxplot.set_xlabel('Density')
-plt.show()
-
-"""
-#Insight Gained:
-    - 
-"""
 
 #Independent Variable (Nominal)
 #person_age
@@ -229,7 +145,9 @@ plt.show()
 
 """
 #Insight Gained:
-    - 
+    - The most common employment length is less than a year, suggesting a high turnover rate or many short-term positions.
+    - There is a noticeable trend of decreasing frequency as employment length increases, showing that longer tenures are less common.
+    - Overall, the graph sheds light on the dynamics of the workforce, particularly in terms of employment longevity and the distribution of tenure lengths.
 """
 
 #cb_person_cred_hist_length
@@ -284,4 +202,271 @@ plt.show()
     - 16.5% of the people apply for a loan for Personal reason
     - 15.5% of the people apply for a loan for Venture funding
     - 11.9% of the people apply for a loan for Home Improvements
+"""
+
+
+#Independent Variable (Ordinal)
+#loan_percent_income
+plt.figure(1)
+plt.subplot(121)
+raw_data_copy.dropna()
+sns.distplot(raw_data_copy['loan_percent_income'])
+plt.title('Distribution of Loan Income Percentage')
+plt.xlabel('Loan Income Percentage')
+plt.ylabel('Density')
+plt.subplot(122)
+boxplot =raw_data_copy['loan_percent_income'].plot.box()
+boxplot.set_title('Box Plot of Loan Income Percentage')
+boxplot.set_xlabel('Density')
+plt.show()
+
+"""
+#Insight Gained:
+    - The distribution graph shows a right-skewed distribution, indicating most loan income percentages are low, with fewer high values.
+    - The box plot reveals the quartiles of the data and potential outliers above the upper whisker.
+"""
+
+#loan_int_rate
+plt.figure(1)
+plt.subplot(121)
+raw_data_copy.dropna()
+sns.distplot(raw_data_copy['loan_int_rate'])
+plt.title('Distribution of Loan Interest Rate')
+plt.xlabel('Loan Rate')
+plt.ylabel('Density')
+plt.subplot(122)
+boxplot =raw_data_copy['loan_int_rate'].plot.box()
+boxplot.set_title('Box Plot of Loan Interest Rate')
+boxplot.set_xlabel('Density')
+plt.show()
+
+"""
+#Insight Gained:
+    - The distribution graph shows a right-skewed distribution of loan rates, with the majority of values clustered between 5% and 10%.
+    - The box plot indicates the median rate at around 10%, with half of the rates falling between approximately 7.5% and 12.5%. 
+    - The box plot indicates that outliers are present above the upper whisker.
+"""
+
+#person_income
+plt.figure(1)
+plt.subplot(121)
+raw_data_copy.dropna()
+sns.distplot(raw_data_copy['person_income'])
+plt.title('Distribution of Income')
+plt.xlabel('Loan Rate')
+plt.ylabel('Density')
+plt.subplot(122)
+boxplot =raw_data_copy['person_income'].plot.box()
+boxplot.set_title('Box Plot of Income')
+boxplot.set_xlabel('Density')
+plt.show()
+
+"""
+#Insight Gained:
+    - The distribution graph indicates a peak near zero with a long tail, suggesting a large number of individuals with low income and fewer with high income, reflecting economic inequality.
+    - The box plot shows there are  outliers indicating individuals with significantly higher incomes.
+"""
+
+#loan_amnt
+plt.figure(1)
+plt.subplot(121)
+raw_data_copy.dropna()
+sns.distplot(raw_data_copy['loan_amnt'])
+plt.title('Distribution of Loan Amount')
+plt.xlabel('Loan Rate')
+plt.ylabel('Density')
+plt.subplot(122)
+boxplot =raw_data_copy['loan_amnt'].plot.box()
+boxplot.set_title('Box Plot of Loan Amount')
+boxplot.set_xlabel('Density')
+plt.show()
+
+"""
+#Insight Gained:
+    - The distribution graph shows a right-skewed distribution with a majority of the loans being of lower amounts, indicating that smaller loans are more common.
+    - The box plot shows that their are outliers of loans significantly larger than the majority.
+"""
+
+# 3. Bi-variate Analysis
+"""
+    # When there are two variables in the data it is called bi-variate analysis. 
+    # Data is analyzed to find the relationship between the dependent and independent variables.
+    # Analyzing bi-variate data involves the following techniques:
+        - Scatter plots and stacked bar graphs
+        - Correlation Coefficients
+        - Covariance matrices
+    # The graphs created below will display how the Dependent Attribute ‘Loan_Status’ is distributed within each Independent Attribute, regardless of how many observations there are.
+"""
+
+# Ordinal Independent Variables and Dependent Variable
+# Loan_Status vs person_age
+person_age = pd.crosstab(raw_data_copy['person_age'], raw_data_copy['loan_status'])
+person_age.div(person_age.sum(1).astype(float),axis=0).plot(kind='bar', stacked=True)
+plt.title('Loan Status by Age Category')
+plt.xlabel('Age Categories')
+plt.ylabel('Loan Status')
+plt.show()
+
+"""
+# Insight Gained:
+    - 
+"""
+
+# Loan_Status vs person_home_ownership
+person_home_ownership = pd.crosstab(raw_data_copy['person_home_ownership'], raw_data_copy['loan_status'])
+person_home_ownership.div(person_home_ownership.sum(1).astype(float),axis=0).plot(kind='bar', stacked=True)
+plt.title('Loan Status by Home Ownership Category')
+plt.xlabel('Home Ownership Categories')
+plt.ylabel('Loan Status')
+plt.show()
+
+"""
+# Insight Gained:
+    - 
+"""
+
+# Loan_Status vs person_emp_length
+person_emp_length = pd.crosstab(raw_data_copy['person_emp_length'], raw_data_copy['loan_status'])
+person_emp_length.div(person_emp_length.sum(1).astype(float),axis=0).plot(kind='bar', stacked=True)
+plt.title('Loan Status by Employment Length Category')
+plt.xlabel('Employment Length Categories')
+plt.ylabel('Loan Status')
+plt.show()
+
+"""
+# Insight Gained:
+    - The proportions of loans that are fully paid or charged off are relatively consistent across all employment length categories.
+    - Employment length does not appear to be a strong indicator of loan repayment behavior, as there is no significant difference in loan status distribution among the categories.
+    - The graph suggests that factors other than employment length might be more influential in determining whether a loan will be fully paid or charged off.
+"""
+
+# Loan_Status vs loan_intent
+loan_intent = pd.crosstab(raw_data_copy['loan_intent'], raw_data_copy['loan_status'])
+loan_intent.div(loan_intent.sum(1).astype(float),axis=0).plot(kind='bar', stacked=True)
+plt.title('Loan Status by Loan Intent Category')
+plt.xlabel('Loan Intent Categories')
+plt.ylabel('Loan Status')
+plt.show()
+
+"""
+# Insight Gained:
+    - 
+"""
+
+
+# Loan_Status vs cb_person_cred_hist_length
+cb_person_cred_hist_length = pd.crosstab(raw_data_copy['cb_person_cred_hist_length'], raw_data_copy['loan_status'])
+cb_person_cred_hist_length.div(cb_person_cred_hist_length.sum(1).astype(float),axis=0).plot(kind='bar', stacked=True)
+plt.title('Loan Status by Credit History Length Category')
+plt.xlabel('Credit History Length Categories')
+plt.ylabel('Loan Status')
+plt.show()
+
+"""
+# Insight Gained:
+    - 
+"""
+
+# Numerical Independent Variables and Dependent Variable LoanAmount
+# Loan_Status vs loan_percent_income
+low = raw_data_copy['loan_percent_income'].quantile(0.333) # 33.3th percentile
+average = raw_data_copy['loan_percent_income'].quantile(0.666) # 66.6th percentile
+high = 0.6
+
+bins = [0, low, average, high]
+group=['Low','Average','High']
+
+raw_data_copy['loan_percent_income_bin']=pd.cut(raw_data_copy['loan_percent_income'],bins,labels=group)
+loan_percent_income_bin=pd.crosstab(raw_data_copy['loan_percent_income_bin'],raw_data_copy['loan_status'])
+loan_percent_income_bin.div(loan_percent_income_bin.sum(1).astype(float),axis=0).plot(kind='bar',stacked=True)
+plt.title('Percentage of Loan Income Percentage Per Income Bracket')
+plt.xlabel('Loan Amount')
+plt.ylabel('Percentage')
+plt.show()
+
+"""
+# Insight Gained:
+    - 
+"""
+
+
+# Loan_Status vs loan_int_rate
+low = raw_data_copy['loan_int_rate'].quantile(0.333) # 33.3th percentile
+average = raw_data_copy['loan_int_rate'].quantile(0.666) # 66.6th percentile
+high = 22
+
+bins = [0, low, average, high]
+group=['Low','Average','High']
+
+raw_data_copy['loan_int_rate_bin']=pd.cut(raw_data_copy['loan_int_rate'],bins,labels=group)
+loan_int_rate_bin=pd.crosstab(raw_data_copy['loan_int_rate_bin'],raw_data_copy['loan_status'])
+loan_int_rate_bin.div(loan_int_rate_bin.sum(1).astype(float),axis=0).plot(kind='bar',stacked=True)
+plt.title('Percentage of Loan Interest Rate Per Interest Bracket')
+plt.xlabel('Loan Amount')
+plt.ylabel('Percentage')
+plt.show()
+
+"""
+# Insight Gained:
+    - 
+"""
+
+# Loan_Status vs loan_amnt
+low = raw_data_copy['loan_amnt'].quantile(0.25) # 25th percentile
+average = raw_data_copy['loan_amnt'].quantile(0.50) # 50th percentile
+above_average = raw_data_copy['loan_amnt'].quantile(0.75) # 75th percentile
+veryHigh = raw_data_copy['loan_amnt'].max() + 1 # maximum loan amount plus 1
+
+bins = [0, low, average, above_average, veryHigh]
+group=['Low','Average','High', 'Very High']
+
+raw_data_copy['loan_amnt_bin'] = pd.cut(raw_data_copy['loan_amnt'], bins, labels=group)
+loan_amnt_bin = pd.crosstab(raw_data_copy['loan_amnt_bin'], raw_data_copy['loan_status'])
+loan_amnt_bin.div(loan_amnt_bin.sum(1).astype(float), axis=0).plot(kind='bar', stacked=True)
+plt.title('Percentage of Loan Amount Per Loan Brackets')
+plt.xlabel('Loan Amount')
+plt.ylabel('Percentage')
+plt.show()
+
+"""
+# Insight Gained:
+    - 
+"""
+
+# Loan_Status vs person_income
+low = raw_data_copy['person_income'].quantile(0.25) # 25th percentile
+average = raw_data_copy['person_income'].quantile(0.50) # 50th percentile
+above_average = raw_data_copy['person_income'].quantile(0.75) # 75th percentile
+veryHigh = raw_data_copy['person_income'].max()+ 1 
+
+bins = [0, low, average, high, veryHigh]
+group=['Low','Average','High', 'Very High']
+
+raw_data_copy['person_income_bin'] = pd.cut(raw_data_copy['person_income'], bins, labels=group)
+Total_Income_bin = pd.crosstab(raw_data_copy['person_income_bin'], raw_data_copy['loan_status'])
+Total_Income_bin.div(Total_Income_bin.sum(1).astype(float), axis=0).plot(kind='bar', stacked=True)
+plt.title('Percentage of Income Per Income Bracket')
+plt.xlabel('Person Income')
+plt.ylabel('Percentage')
+plt.show()
+
+"""
+# Insight Gained:
+    - 
+"""
+
+# Drop all bins created:
+raw_data_copy=raw_data_copy.drop(['loan_percent_income_bin', 'loan_int_rate_bin', 'loan_amnt_bin', 'person_income_bin'],axis=1)
+
+
+# Using a Heatmap, the numerical attributes in the dataset is viewed to gain insight into the overall comparison through the colour shade variations
+numeric_cols = raw_data_copy.select_dtypes(include=[np.number])
+plt.figure(figsize=(10,8))
+sns.heatmap(numeric_cols.corr(), annot=True, cmap='PuRd')
+plt.title('Correlation Heatmap')
+plt.show()
+
+"""
+# Insight Gained:
+    - 
 """
