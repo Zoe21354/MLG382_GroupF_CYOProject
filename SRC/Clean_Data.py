@@ -79,7 +79,7 @@ Number of Missing Values in credit_risk_validation_data_copy:
         # For Numerical Variables use either the mean or median of the values in the attribute to fill in the missing data values
             - loan_int_rate
 """
-#=== CATEGORICAL VARIABLES === 
+#=== ORDINAL VARIABLES === 
 credit_risk_raw_data_copy['person_emp_length'].fillna(credit_risk_raw_data_copy['person_emp_length'].mode()[0],inplace=True)
 
 #=== NUMERICAL VARIABLES ===
@@ -120,7 +120,7 @@ credit_risk_raw_data_copy = credit_risk_raw_data_copy.drop_duplicates()
 print(f"Number of duplicate rows in raw_data_copy: {credit_risk_raw_data_copy.duplicated().sum()}\n")
 """ Answers: Number of duplicate rows in raw_data_copy: 0 """
 
-# 4. Convert the datatype of the attribute 'person_emp_length' in credit_risk_validation_data_copy to int64
+# 4. Convert the datatype of the attribute 'person_emp_length' in credit_risk_validation_data_copy to float64
 credit_risk_validation_data_copy['person_emp_length'] = credit_risk_validation_data_copy['person_emp_length'].astype('float64')
 print(f"person_emp_length datatype: {credit_risk_validation_data_copy['person_emp_length'].dtypes}\n")
 """Answer: person_emp_length datatype: float64"""
