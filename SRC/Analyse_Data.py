@@ -24,12 +24,12 @@ print(f"Validation Data Columns:{validation_data_copy.columns}\n")
 """
 # Answer:
     - Raw Data Columns: 
-        Index(['person_age', 'person_income', 'person_home_ownership', 'person_emp_length', 'loan_intent', 'loan_amnt', 'loan_int_rate',        
-            'loan_percent_income', 'cb_person_cred_hist_length', 'cb_person_default_on_file', 'loan_status'],dtype='object')
+        Index(['person_age', 'person_income', 'person_home_ownership','person_emp_length', 'loan_intent', 'loan_amnt', 'loan_int_rate',        
+        'loan_percent_income', 'cb_person_cred_hist_length', 'loan_status'],dtype='object')
 
     - Validation Data Columns:
         Index(['person_age', 'person_income', 'person_home_ownership','person_emp_length', 'loan_intent', 'loan_amnt', 'loan_int_rate',
-            'loan_percent_income', 'cb_person_cred_hist_length','cb_person_default_on_file'],dtype='object')
+        'loan_percent_income', 'cb_person_cred_hist_length'],dtype='object')
 
 # Insights Gained:
     - The attribute names are inconsistent and will need standardizing in the data processing section.
@@ -56,7 +56,6 @@ print(f"Validation Dataset Datatypes:\n{validation_data_copy.dtypes}\n")
         loan_int_rate                 float64
         loan_percent_income           float64
         cb_person_cred_hist_length      int64
-        cb_person_default_on_file      object
         loan_status                     int64
         dtype: object
 
@@ -70,11 +69,10 @@ print(f"Validation Dataset Datatypes:\n{validation_data_copy.dtypes}\n")
         loan_int_rate                 float64
         loan_percent_income           float64
         cb_person_cred_hist_length      int64
-        cb_person_default_on_file      object
         dtype: object
 
 # Insights Gained:
-    - There is a discrepancy between the two datasets: the "person_emp_length" attribute is of datatype float64 in the raw_data.csv file but of datatype object in the validation_data.csv file. 
+    - There is a discrepancy between the two datasets: the "person_emp_length" attribute is of datatype float64 in the raw_data.csv file but of datatype int64 in the validation_data.csv file. 
     - This could lead to potentially issues when modeling, as the model might be expecting the same data type for a given attribute.
     - This discrepancy will need to be fixed in the data processing section.
 """
@@ -85,12 +83,12 @@ print(f"Validation Data Shape:\n{validation_data_copy.shape}")
 
 """
 # Answers:
-    - Raw Data Shape: (1457, 11)
-    - Validation Data Shape: (470, 10)
+    - Raw Data Shape: (1526, 10)
+    - Validation Data Shape: (470, 9)
 
 # Insights Gained:
-    - Raw Data Shape: 1457 rows and 11 columns
-    - Validation Data Shape: 470 rows and 10 columns
+    - Raw Data Shape: 1498 rows and 10 columns
+    - Validation Data Shape: 470 rows and 9 columns
 """
 
 # 2. Univariate Analysis
@@ -116,8 +114,8 @@ plt.show()
 
 """
 #Insight Gained:
-    - 0.65 or 65% of the people were approved for a loan (i.e Loan_Status = Yes)
-    - 0.35 or 35% of the people were not approved for a loan (i.e Loan_Status = No)
+    - 0.66 or 66% of the people were approved for a loan (i.e Loan_Status = Yes)
+    - 0.34 or 34% of the people were not approved for a loan (i.e Loan_Status = No)
 """
 
 
@@ -159,16 +157,6 @@ plt.show()
 
 """
 #Insight Gained:
-    - 22.8% of the people who applied have a credit history length of 2
-    - 20.5% of the people who applied have a credit history length of 4
-    - 19.8% of the people who applied have a credit history length of 3
-    - 6.1% of the people who applied have a credit history length of 14
-    - 5.6% of the people who applied have a credit history length of 11
-    - 5.2% of the people who applied have a credit history length of 12
-    - 5.2% of the people who applied have a credit history length of 16
-    - 5.1% of the people who applied have a credit history length of 15
-    - 5.1% of the people who applied have a credit history length of 13
-    - 4.6% of the people who applied have a credit history length of 17
     - The distribution appears to be right-skewed, meaning there are more individuals with shorter credit histories than those with longer ones.
 """
 
@@ -181,8 +169,8 @@ plt.show()
 
 """
 #Insight Gained:
-    - 58.5% of the people who apply for a loan pay rent
-    - 34.2% of the people who apply for a loan pay a mortgage
+    - 57.5% of the people who apply for a loan pay rent
+    - 35.3% of the people who apply for a loan pay a mortgage
     - 6.9% of the people who apply for a loan own a house
     - 0.3% of the people who apply for a loan have other living arrangements
 """
@@ -197,11 +185,11 @@ plt.show()
 """
 #Insight Gained:
     - 19.6% of the people apply for a loan for their Education
-    - 19.3% of the people apply for a loan for their Medical bills
-    - 17.2% of the people apply for a loan for their Debt Consolidations
+    - 19.4% of the people apply for a loan for their Medical bills
+    - 17.0% of the people apply for a loan for their Debt Consolidations
     - 16.5% of the people apply for a loan for Personal reason
-    - 15.5% of the people apply for a loan for Venture funding
-    - 11.9% of the people apply for a loan for Home Improvements
+    - 15.9% of the people apply for a loan for Venture funding
+    - 11.7% of the people apply for a loan for Home Improvements
 """
 
 
@@ -309,7 +297,9 @@ plt.show()
 
 """
 # Insight Gained:
-    - 
+    - Individuals with the age group of 20 have all been aproved for a loan where as individuals of age 49 have all been rejected. 
+    - These are significant
+    - The graph suggests that age is a significant factor in loan approval decisions by lenders.
 """
 
 # Loan_Status vs person_home_ownership
@@ -439,12 +429,12 @@ average = raw_data_copy['person_income'].quantile(0.50) # 50th percentile
 above_average = raw_data_copy['person_income'].quantile(0.75) # 75th percentile
 veryHigh = raw_data_copy['person_income'].max()+ 1 
 
-bins = [0, low, average, high, veryHigh]
-group=['Low','Average','High', 'Very High']
+bins = [0, low, average, above_average, veryHigh]
+group=['Low','Average','Above Average', 'Very High']
 
 raw_data_copy['person_income_bin'] = pd.cut(raw_data_copy['person_income'], bins, labels=group)
-Total_Income_bin = pd.crosstab(raw_data_copy['person_income_bin'], raw_data_copy['loan_status'])
-Total_Income_bin.div(Total_Income_bin.sum(1).astype(float), axis=0).plot(kind='bar', stacked=True)
+person_income_bin = pd.crosstab(raw_data_copy['person_income_bin'], raw_data_copy['loan_status'])
+person_income_bin.div(person_income_bin.sum(1).astype(float), axis=0).plot(kind='bar', stacked=True)
 plt.title('Percentage of Income Per Income Bracket')
 plt.xlabel('Person Income')
 plt.ylabel('Percentage')
