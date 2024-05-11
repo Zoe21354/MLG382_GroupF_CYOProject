@@ -19,18 +19,15 @@ warnings.filterwarnings('ignore')
 """
 
 # Read Cleaned CSV Files
-cleaned_raw_data = pd.read_csv('Data/Cleaned Data/cleaned_raw_data.csv')
+cleaned_raw_data = pd.read_csv('Data/Clean Data/cleaned_credit_risk_raw_data.csv')
 cleaned_raw_data_copy = cleaned_raw_data.copy()
 
-# Convert the 'Person_Emp_Length' column to 'object'
-cleaned_raw_data_copy['Person_Emp_Length'] = cleaned_raw_data_copy['Person_Emp_Length'].astype('object')
-
 # Define the independent variables (features) and the target variable
-X = cleaned_raw_data_copy.drop('Loan_Status', axis=1)
-y = cleaned_raw_data_copy['Loan_Status']
+X = cleaned_raw_data_copy.drop('loan_status', axis=1)
+y = cleaned_raw_data_copy['loan_status']
 
 
-# Convert categorical variable in the X dataset(all columns except 'Loan_Status') into dummy variables
+# Convert categorical variable in the X dataset(all columns except 'loan_status') into dummy variables
 X = pd.get_dummies(X)
 
 # Split the data into training and testing sets
@@ -41,8 +38,8 @@ train_data = pd.concat([X_train, y_train], axis=1)
 test_data = pd.concat([X_test, y_test], axis=1)
 
 # Save the training and testing sets to CSV files
-train_data.to_csv('Data/Processed Data/train_data.csv', index=False)
-test_data.to_csv('Data/Processed Data/test_data.csv', index=False)
+train_data.to_csv('Data/Split Data/train_data.csv', index=False)
+test_data.to_csv('Data/Split Data/test_data.csv', index=False)
 
 
 # ================================================== B. TRAIN MODEL 1 ================================================== #

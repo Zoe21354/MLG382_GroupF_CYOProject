@@ -121,9 +121,9 @@ print(f"Number of duplicate rows in raw_data_copy: {credit_risk_raw_data_copy.du
 """ Answers: Number of duplicate rows in raw_data_copy: 0 """
 
 # 4. Convert the datatype of the attribute 'person_emp_length' in credit_risk_validation_data_copy to int64
-credit_risk_validation_data_copy['person_emp_length'] = credit_risk_validation_data_copy['person_emp_length'].astype('int64')
+credit_risk_validation_data_copy['person_emp_length'] = credit_risk_validation_data_copy['person_emp_length'].astype('float64')
 print(f"person_emp_length datatype: {credit_risk_validation_data_copy['person_emp_length'].dtypes}\n")
-"""Answer: person_emp_length datatype: int64"""
+"""Answer: person_emp_length datatype: float64"""
 
 # 4. For both dataset, perform outliers Data Handling using log transformation
 #person_income
