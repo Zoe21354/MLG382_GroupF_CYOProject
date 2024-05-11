@@ -160,5 +160,5 @@ Answer:
 """
 
 # 5. For both datasets, write the new datasets to CSV files
-credit_risk_raw_data_copy.to_csv('Data/Clean Data/cleaned_credit_risk_raw_data_copy.csv', index=False)
+credit_risk_raw_data_copy.to_csv('Data/Clean Data/cleaned_credit_risk_raw_data.csv', index=False)
 credit_risk_validation_data_copy.to_csv('Data/Clean Data/cleaned_credit_risk_validation_data.csv', index=False)
