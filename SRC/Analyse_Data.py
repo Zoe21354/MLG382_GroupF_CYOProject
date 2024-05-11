@@ -119,7 +119,7 @@ plt.show()
 """
 
 
-#Independent Variable (Nominal)
+#Independent Variable (Ordinal)
 #person_age
 count = raw_data_copy['person_age'].value_counts('normalize = True')
 chart = count.plot.bar(title='Age', xlabel = 'Categories', ylabel = 'Frequency')
@@ -193,7 +193,7 @@ plt.show()
 """
 
 
-#Independent Variable (Ordinal)
+#Independent Variable (Nominal)
 #loan_percent_income
 plt.figure(1)
 plt.subplot(121)
@@ -283,7 +283,7 @@ plt.show()
         - Scatter plots and stacked bar graphs
         - Correlation Coefficients
         - Covariance matrices
-    # The graphs created below will display how the Dependent Attribute ‘Loan_Status’ is distributed within each Independent Attribute, regardless of how many observations there are.
+    # The graphs created below will display how the Dependent Attribute ‘loan_status’ is distributed within each Independent Attribute, regardless of how many observations there are.
 """
 
 # Ordinal Independent Variables and Dependent Variable
