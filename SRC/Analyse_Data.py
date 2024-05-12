@@ -458,5 +458,7 @@ plt.show()
 
 """
 # Insight Gained:
-    - 
+    - ‘person_age’ and ‘person_income’ have a dark red cell at their intersection, it means they are strongly positively correlated. As one increases, the other also tends to increase.
+    - ‘person_age’ and ‘loan_intent’ have a dark purple cell at their intersection, it means they are strongly negatively correlated. As one increases, the other tends to decrease.
+    - ‘person_weight’ and ‘person_income’, ‘loan_amount’ and ‘person_home_ownership’, ‘loan_intent’ and ‘loan_percent_income’ all have weak or no correlations
 """
