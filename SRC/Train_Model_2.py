@@ -30,13 +30,15 @@ X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_
 
 # ================================================== B. TRAIN MODEL 2 ================================================== #
 
-# New Model Name
-# Build the model
+
 # Initializing cross-validation with 5 folds
 i = 1
 kf = StratifiedKFold(n_splits=5,random_state=42, shuffle=True)
-for train_index,test_index in kf.split(X_train,y):
+for train_index,test_index in kf.split(X_train,y_train):
     print('\n{} of kf {}'.format(i,kf.n_splits))
+    # Resetting the indices of X_train
+    X_train.reset_index(drop=True, inplace=True)
+    y_train.reset_index(drop=True, inplace=True)
     xtr,xvl= X_train.loc[train_index],X_train.loc[test_index]
     ytr,yvl= y_train.loc[train_index],y_train.loc[test_index]
 
@@ -61,26 +63,22 @@ pred_test= modelLog.predict(X_test)
 pred = modelLog.predict_proba(xvl)[:,1]
 
 
-# Evaluate the model on the testing data
 
 
 """
 #Answers: 
-
+This model appear to have a accuracy score between 0.68-0.74
+which makes its accuracy score the having the lowest start point of them all
 
 #Insight Gained:
-    - 
+    - this model does not have the highest accuracy score and it will be better to use a differnet model 
 """
-# Create dummy feature importance values
+#assigning names of the columns to the dataframe
 feature_names = X_train.columns  
-importance_values = [0.1] * len(feature_names)  # Example: assigning same importance value for all features please fix it with our values
 
-# Save feature importance values to CSV file
-feature_importance_df = pd.DataFrame({'Feature': feature_names, 'Importance': importance_values})
-feature_importance_df.to_csv('feature_importance.csv', index=False)
 
 # Create submission DataFrame and save to CSV file
-submission = pd.DataFrame({'Loan_ID': range(1, len(X_test) + 1), 'Loan_status': pred_test})
+submission = pd.DataFrame({'Prediction_ID': range(1, len(X_test) + 1), 'Loan_Status': pred_test})
 submission['Loan_status'].replace(0, 'N', inplace=True)
 submission['Loan_status'].replace(1, 'Y', inplace=True)
 submission.to_csv('ReggModel2log.csv', index=False)
@@ -92,7 +90,7 @@ submission.to_csv('ReggModel2log.csv', index=False)
 # Build the model
 i = 1
 kf = StratifiedKFold(n_splits=5,random_state=42, shuffle=True)
-for train_index,test_index in kf.split(X_train,y):
+for train_index,test_index in kf.split(X_train,y_train):
     print('\n{} of kf {}'.format(i,kf.n_splits))
     xtr,xvl= X_train.loc[train_index],X_train.loc[test_index]
     ytr,yvl= y_train.loc[train_index],y_train.loc[test_index]
@@ -118,7 +116,7 @@ pred_test= modelTree.predict(X_test)
 pred = modelTree.predict_proba(xvl)[:,1]
 
 """
-Answers:
+Answers: this model has an accuracy score of 0.78-0.85 already having a significant increase when comparing to the logistic regression model
 
 """
 
@@ -154,9 +152,10 @@ print("Mean validation accuracy:", mean_validation_accuracy)
 
 """
 Answer:
+Best hyperparameters: {'max_depth': 9, 'min_samples_leaf': 3, 'min_samples_split': 16}
+after using the hyperparameters we can already see that the mean accracy score is already higher than what the score was without the hyperparameters
 
-
-    Mean validation accuracy score: 
+    Mean validation accuracy score: 0.8530425689806382
 """
 
 
@@ -179,7 +178,8 @@ mean_validation_accuracy = grid_search.best_score_
 print("Mean validation accuracy:", mean_validation_accuracy)
 
 # Save predictions to a CSV file
-submission = pd.DataFrame({'Loan_ID': y_test['Loan_ID'], 'Loan_Status': pred_test})
+submission = pd.DataFrame({'Loan_ID': range(1, len(X_test) + 1), 'Loan_status': pred_test})
+#submission = pd.DataFrame({'Loan_ID': X_test['Loan_ID'], 'Loan_Status': pred_test})
 submission.to_csv('test_predictions.csv', index=False)
 # Create submission DataFrame and save to CSV file
 submission = pd.DataFrame({'Prediction_ID': range(1, len(X_test) + 1), 'Loan_Status': pred_test})
@@ -188,7 +188,7 @@ submission['Loan_Status'].replace(1, 'Y', inplace=True)
 submission.to_csv('DecisModel2Log.csv', index=False)
 
 """
-#Answer: Mean validation accuracy score: 
+#Answer: Mean validation accuracy score: 0.8530425689806382
 
 Insight Gained:
     - 
@@ -199,7 +199,7 @@ Insight Gained:
 # Build the model
 i = 1
 kf = StratifiedKFold(n_splits=5,random_state=42, shuffle=True)
-for train_index,test_index in kf.split(X_train,y):
+for train_index,test_index in kf.split(X_train,y_train):
     print('\n{} of kf {}'.format(i,kf.n_splits))
     xtr,xvl= X_train.loc[train_index],X_train.loc[test_index]
     ytr,yvl= y_train.loc[train_index],y_train.loc[test_index]
@@ -216,6 +216,11 @@ for train_index,test_index in kf.split(X_train,y):
     # Calculating accuracy score on validation data
     score =accuracy_score(yvl,pred_test)
     print('accuracy_score',score)
+
+    # Accumulate accuracy scores for each fold
+    mean_validation_accuracy += score
+
+
     i+= 1
 
 # Predicting on test data
@@ -224,15 +229,17 @@ pred_test= modelLog.predict(X_test)
 # Storing probability prediction for validation data
 pred = modelLog.predict_proba(xvl)[:,1]
 
-# Calculate the mean validation accuracy score
-mean_validation_accuracy = accuracy_score(yvl, pred_test)
+
+# Calculate the mean validation accuracy score across all folds
+mean_validation_accuracy /= kf.get_n_splits()
+
 print("Mean validation accuracy:", mean_validation_accuracy)
 
 """
 Answers:
+The RandomForestClassifier model gave us the highest accuracy score and will be used to as the main model 
 
-
-    Mean validation accuracy score: 
+    Mean validation accuracy score: 0.9842123726641031
 """
 
 
@@ -257,12 +264,36 @@ pred_test = best_model.predict(X_test)
 mean_validation_accuracy = grid_search.best_score_
 print("Mean validation accuracy:", mean_validation_accuracy)
 
+# Get feature importances
+feature_importances = best_model.feature_importances_
+
+# Create a DataFrame to store feature importances
+feature_importance_df = pd.DataFrame({'Feature': feature_names, 'Importance': feature_importances})
+
+# Sort the DataFrame by importance values in descending order
+feature_importance_df = feature_importance_df.sort_values(by='Importance', ascending=False)
+
+# Print or visualize feature importances
+print(feature_importance_df)
+
+# Optionally, you can plot the feature importances
+plt.figure(figsize=(10, 6))
+plt.barh(feature_importance_df['Feature'], feature_importance_df['Importance'])
+plt.xlabel('Importance')
+plt.ylabel('Feature')
+plt.title('Feature Importance')
+#plt.show()
+
+# Save the figure to a file 
+plt.savefig('feature_importance_plot.png', bbox_inches='tight')  
+
+feature_importance_df.to_csv('feature_importance.csv', index=False)
 
 """
 Answer:
 
 
-    Mean validation accuracy score: 
+    Mean validation accuracy score: 0.894083518855832
 """
 
 
@@ -285,7 +316,7 @@ pred_test = best_model.predict(test_processed)
 submission = pd.DataFrame({'Prediction_ID': range(1, len(test_processed) + 1), 'Loan_Status': pred_test})
 submission['Loan_Status'].replace(0, 'N', inplace=True)
 submission['Loan_Status'].replace(1, 'Y', inplace=True)
-submission.to_csv('test_predictions.csv', index=False)
+submission.to_csv('RandomForestClassifierModel2Log.csv', index=False)
 """ 
 Insight Gained:
     - 
@@ -293,19 +324,17 @@ Insight Gained:
 
 # -------------------------------------------------------
 # Take the model with the best accuracy score
-# Fill 'Loan_Status' with predictions
+
+# Convert predictions to 'N' and 'Y' labels
+pred_labels = ['N' if pred == 0 else 'Y' for pred in pred_test]
+
+# Create DataFrame with Prediction_ID and Loan_Status columns
+submission = pd.DataFrame({'Prediction_ID': range(1, len(test_processed) + 1), 'Loan_Status': pred_labels})
+
+# Save DataFrame to a CSV file
+submission.to_csv('RandomForestClassifierBestModel.csv', index=False)
 
 
-# Replace 0 and 1 with 'N' and 'Y'
-
-
-# Convert the submission DataFrame to a .csv format
-
-
-# Convert the importances into a pandas DataFrame
-
-
-# Plot the feature importances
 
 
 """
@@ -314,3 +343,5 @@ Insight Gained:
 """
 
 # Save Model 2 as a pickle file
+with open('modelFor.pkl', 'wb') as file:
+    pickle.dump(modelFor, file)
