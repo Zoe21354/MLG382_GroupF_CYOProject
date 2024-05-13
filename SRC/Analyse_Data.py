@@ -407,10 +407,6 @@ plt.xlabel('Loan Amount')
 plt.ylabel('Percentage')
 plt.show()
 
-"""
-# Insight Gained:
-    - 
-"""
 
 # Loan_Status vs loan_amnt
 low = raw_data_copy['loan_amnt'].quantile(0.25) # 25th percentile
@@ -429,10 +425,6 @@ plt.xlabel('Loan Amount')
 plt.ylabel('Percentage')
 plt.show()
 
-"""
-# Insight Gained:
-    - 
-"""
 
 # Loan_Status vs person_income
 low = raw_data_copy['person_income'].quantile(0.25) # 25th percentile
@@ -449,12 +441,8 @@ person_income_bin.div(person_income_bin.sum(1).astype(float), axis=0).plot(kind=
 plt.title('Percentage of Income Per Income Bracket')
 plt.xlabel('Person Income')
 plt.ylabel('Percentage')
-plt.show()
+plt.show() 
 
-"""
-# Insight Gained:
-    - 
-"""
 
 # Drop all bins created:
 raw_data_copy=raw_data_copy.drop(['loan_percent_income_bin', 'loan_int_rate_bin', 'loan_amnt_bin', 'person_income_bin'],axis=1)
