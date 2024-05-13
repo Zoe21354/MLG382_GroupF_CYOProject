@@ -8,7 +8,8 @@ import pandas as pd
 
 with open('Artifacts/Models/Model_2.pkl', 'rb') as file:
     model = pickle.load(file)
-    # Define feature_names as a global variable
+
+# Define feature_names as a global variable
 try:
     feature_names = model.feature_names_in_
 except AttributeError:
