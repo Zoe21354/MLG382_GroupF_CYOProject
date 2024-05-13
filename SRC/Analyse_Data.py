@@ -297,8 +297,7 @@ plt.show()
 
 """
 # Insight Gained:
-    - Individuals with the age group of 20 have all been aproved for a loan where as individuals of age 49 have all been rejected. 
-    - These are significant
+    - Individuals with the age group of 20 have all been approved for a loan where as individuals of age 49 have all been rejected. 
     - The graph suggests that age is a significant factor in loan approval decisions by lenders.
 """
 
@@ -312,7 +311,10 @@ plt.show()
 
 """
 # Insight Gained:
-    - 
+    - Individuals who own their homes (OWN category) have a significantly higher rate of loan approval compared to those in other categories.
+    - Individuals with a mortgage (MORTGAGE category) also have a slightly higher proportion of loan approvals than rejections.
+    - Conversely, individuals who rent their homes (RENT category) have a higher rate of loan rejections compared to approvals.
+    - The OTHER category shows an equal proportion of approvals and rejections, suggesting that this category may include a diverse range of situations that do not fit neatly into the other categories.
 """
 
 # Loan_Status vs person_emp_length
@@ -340,7 +342,10 @@ plt.show()
 
 """
 # Insight Gained:
-    - 
+    - The chart suggests that the proportion of loan approvals is consistently higher than loan rejections across all loan intent categories. This indicates that the majority of loans are approved regardless of the intent.
+    - The highest number of loans are approved for debt consolidation, suggesting that this is a common reason for seeking a loan and that these loans are often approved.
+    - Loans intended for education and home improvement also have a high approval rate, indicating that these are also commonly accepted reasons for loan approval.
+    - Loans for medical and personal reasons have a lower approval rate compared to the other categories, but still, the approval rate is higher than the rejection rate.
 """
 
 
@@ -354,7 +359,9 @@ plt.show()
 
 """
 # Insight Gained:
-    - 
+    - The chart suggests that the proportion of loan approvals is consistently higher than loan rejections across all Credit History Length categories, indicating that having a credit history, regardless of its length, positively influences the likelihood of loan approval.
+    - The approval rates are consistently higher across all categories, suggesting that the length of credit history does not significantly impact the approval rate.
+    - While the approval rates are consistently high, there is a slight increase in the rejection rates as the length of credit history increases, suggesting that longer credit histories might include more negative events, leading to a slightly higher rejection rate.
 """
 
 # Numerical Independent Variables and Dependent Variable LoanAmount
@@ -376,7 +383,11 @@ plt.show()
 
 """
 # Insight Gained:
-    - 
+    - The chart suggests that the loan approval rate is consistent across different loan income percentage brackets (Low, Average, High).
+    - The proportion of approved and not approved loans appears to be similar in all three categories.
+    - The chart does not show a clear trend or correlation between the loan income percentage and the loan approval rate, suggesting that the percentage of loan income may not be a significant factor in determining loan approval.
+    - All three categories (Low, Average, High) have a similar distribution of approved and not approved loans. 
+    - This further supports the inference that the loan income percentage does not significantly influence the loan approval rate.
 """
 
 
