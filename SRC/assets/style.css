@@ -1,36 +1,47 @@
 
 body {
+    width: 100%;
     font-family: 'Arial', sans-serif;
     font-size: 16px;
     margin: 20px;
-    background-color: #f9f9f9;
+    background-color: #e9e9e9;
+    margin: auto;
+}
+#container {
+    width: 80%;
+    margin: auto;
+    padding: 20px;
 }
 
-
 h1 {
-    color: #2c3e50;
+    color: #263f58;
     text-align: center;
     margin-bottom: 20px;
 }
 
-
 .form-group {
     margin-bottom: 15px;
+    width: 80%;
 }
 
-
-.label {
+label {
     font-weight: bold;
-    margin-bottom: 5px;
-    display: block;
+    margin-bottom: 15px;
+    display: inline-block;
+    width: 30%;
 }
 
-input, .dropdown {
-    width: 100%;
+input {
+    width: 50%;
     padding: 10px;
-    margin-bottom: 10px;
+    margin-bottom: 15px;
     border: 1px solid #ccc;
     border-radius: 5px;
+}
+#loan_intent, #person_home_ownership {
+    width: 45%;
+    margin-bottom: 15px;
+    padding: 10px;
 }
 
 button {
@@ -48,10 +59,10 @@ button:hover {
     background-color: #2ecc71;
 }
 
-
 #prediction-output {
     text-align: center;
     margin-top: 20px;
     font-size: 18px;
     color: #e74c3c;
+    padding-bottom: 20px;
 }
