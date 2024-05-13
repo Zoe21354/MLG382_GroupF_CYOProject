@@ -78,7 +78,7 @@ def update_output(n_clicks, person_age, person_income, person_home_ownership, pe
 
     
     
-        return "Simulated Preidction: 0 "
+        return "Simulated Prediction: 0 "
     else:
         return 'Fill in the form and press Enter'
     
