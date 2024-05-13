@@ -8,7 +8,7 @@ from sklearn.metrics import accuracy_score
 from sklearn.ensemble import RandomForestClassifier
 import warnings
 warnings.filterwarnings('ignore')
-
+submission = pd.DataFrame()
 # Read Cleaned CSV Files
 cleaned_raw_data = pd.read_csv('Data/Feature Engineering/new_features_engineered.csv')
 cleaned_raw_data_copy = cleaned_raw_data.copy()
