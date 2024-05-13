@@ -5,8 +5,8 @@ from dash.dependencies import Input, Output,State
 import pickle
 import numpy as np
 
-'''model_path = 'model.pk1'
-with open(model_path, 'rb') as file:
+'''
+with open('Artifacts/Models/Model_2.pkl', 'rb') as file:
     model = pickle.load(file)'''
     
 app = dash.Dash(__name__)
@@ -19,7 +19,7 @@ app.layout = html.Div([
         html.Label("Income"),
         dcc.Input(id = "person_income", type = 'number', placeholder = "Income"),
         html.Label("Home Ownership:"),
-        dcc.Dropdown(id="person_home_owernship", options = [
+        dcc.Dropdown(id="person_home_ownership", options = [
             {'label': 'Own', 'value':'OWN'},
             {'label':'Rent','value':'RENT'},
             {'label':'Morgage','value': 'MORGAGE'},
@@ -28,7 +28,7 @@ app.layout = html.Div([
         html.Label("Employment Length in years"),
         dcc.Input(id="person_emp_length",type='number',placeholder='Enter years in employment'),
         html.Label("Loan Intenet"),
-        dcc.Dropdown(id='Loan_intent', options = [
+        dcc.Dropdown(id='loan_intent', options = [
             {'label':'Personal','value':'Personal'},
             {'label':'Education','value':'EDUCATIONAL'},
             {'label':'Medical', 'value':'MEDICAL'},
@@ -43,7 +43,7 @@ app.layout = html.Div([
         html.Label("Loan Percent Income:"),
         dcc.Input(id='loan_percent_income', type='number',placeholder = 'Loan percent Income',step=0.01),
         html.Label("Credit Default on File:"),
-        dcc.Dropdown(id='cv_person_default_on_file',options=
+        dcc.Dropdown(id='cb_person_default_on_file',options=
                     [
                     {'label':'Yes','value':'Y'},
                     {'label':'No','value':'N'}
@@ -59,11 +59,11 @@ app.layout = html.Div([
 @app.callback(
     Output('prediction-output','children'),
     [Input('submit','n_clicks')],
-    [State('person-age','value'),
+    [State('person_age','value'),
     State('person_income','value'),
     State('person_home_ownership','value'),
     State('person_emp_length','value'),
-    State('load_intent','value'),
+    State('loan_intent','value'),
     State('loan_amnt','value'),
     State('loan_int_rate','value'),
     State('loan_percent_income','value'),
@@ -78,7 +78,7 @@ def update_output(n_clicks, person_age, person_income, person_home_ownership, pe
 
     
     
-        return "Simulated Preidction: 0 "
+        return "Simulated Prediction: 0 "
     else:
         return 'Fill in the form and press Enter'
     
