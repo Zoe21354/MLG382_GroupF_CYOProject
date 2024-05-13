@@ -5,8 +5,6 @@ import matplotlib.pyplot as plt
 from sklearn.model_selection import train_test_split, StratifiedKFold, cross_val_predict, GridSearchCV
 from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import accuracy_score
-from tensorflow.keras.models import Sequential
-from tensorflow.keras.layers import Dense
 from sklearn.tree import DecisionTreeClassifier
 from sklearn import tree
 from sklearn.preprocessing import MinMaxScaler
