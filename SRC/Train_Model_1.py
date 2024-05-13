@@ -1,7 +1,7 @@
 import pandas as pd
 import numpy as np
 import pickle
-from sklearn.model_selection import train_test_split, StratifiedKFold, cross_val_predict
+from sklearn.model_selection import train_test_split, StratifiedKFold, cross_val_predict, GridSearchCV
 from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import accuracy_score
 import warnings                                         # Ignores any future warnings
@@ -32,14 +32,13 @@ X = pd.get_dummies(X)
 # Split the data into training and testing sets
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
 
-""" # Create new DataFrames for training and testing sets
+# Create new DataFrames for training and testing sets
 train_data = pd.concat([X_train, y_train], axis=1)
 test_data = pd.concat([X_test, y_test], axis=1)
 
 # Save the training and testing sets to CSV files
 train_data.to_csv('Data/Split Data/Model 1/train_data_ML1.csv', index=False)
 test_data.to_csv('Data/Split Data/Model 1/test_data_ML1.csv', index=False)
-"""
 
 # ================================================== B. TRAIN MODEL 1 ================================================== #
 
@@ -146,11 +145,3 @@ feature_importance_updated.to_csv('Artifacts/Feature Importance/most_accurate_mo
 # 14. Save the model that is the most accurate to a pickle file named 'Model_1.pkl'
 with open('Artifacts/Models/Model_1.pkl', 'wb') as file:
     pickle.dump(most_accurate_model, file)
-
-
-
-
-
-
-
-    
