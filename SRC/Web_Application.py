@@ -5,8 +5,8 @@ from dash.dependencies import Input, Output,State
 import pickle
 import numpy as np
 
-'''model_path = 'model.pk1'
-with open(model_path, 'rb') as file:
+'''
+with open('Artifacts/Models/Model_2.pkl', 'rb') as file:
     model = pickle.load(file)'''
     
 app = dash.Dash(__name__)
