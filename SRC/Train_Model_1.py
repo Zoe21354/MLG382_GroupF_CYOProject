@@ -26,77 +26,131 @@ cleaned_raw_data_copy = cleaned_raw_data.copy()
 X = cleaned_raw_data_copy.drop('loan_status', axis=1)
 y = cleaned_raw_data_copy['loan_status']
 
-
 # Convert categorical variable in the X dataset(all columns except 'loan_status') into dummy variables
 X = pd.get_dummies(X)
 
 # Split the data into training and testing sets
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
 
-# Create new DataFrames for training and testing sets
+""" # Create new DataFrames for training and testing sets
 train_data = pd.concat([X_train, y_train], axis=1)
 test_data = pd.concat([X_test, y_test], axis=1)
 
 # Save the training and testing sets to CSV files
-train_data.to_csv('Data/Split Data/train_data.csv', index=False)
-test_data.to_csv('Data/Split Data/test_data.csv', index=False)
-
+train_data.to_csv('Data/Split Data/Model 1/train_data_ML1.csv', index=False)
+test_data.to_csv('Data/Split Data/Model 1/test_data_ML1.csv', index=False)
+"""
 
 # ================================================== B. TRAIN MODEL 1 ================================================== #
 
+# 1. Train a Logistic Regression model
+logreg = LogisticRegression()
+logreg.fit(X_train, y_train)
+
+# 2. Make predictions with the model
+y_pred = logreg.predict(X_test)
+
+# 3. Check the accuracy of the model
+accuracy = accuracy_score(y_test, y_pred)
+print(f"Model Accuracy: {accuracy}")
+"""Answer: Model Accuracy: {accuracy} """
+
+# 4. Save the predictions to a csv file
+predictions = pd.DataFrame(y_pred, columns=['predictions'])
+predictions.to_csv('Artifacts/Predictions/logreg_predictions.csv', index=False)
+
+# 5. Cross Validate the model by building another model
+# For this, we'll use a new split of the data
+X_train_cv, X_test_cv, y_train_cv, y_test_cv = train_test_split(X, y, test_size=0.2, random_state=0)
+logreg_cv = LogisticRegression()
+logreg_cv.fit(X_train_cv, y_train_cv)
+
+# 6. Make predictions on the cross validate model
+y_pred_cv = logreg_cv.predict(X_test_cv)
+
+# 7. Check the accuracy score of the cross validate model
+accuracy_cv = accuracy_score(y_test_cv, y_pred_cv)
+print(f"Cross-Validated Model Accuracy: {accuracy_cv}")
+"""Answer: Cross-Validated Model Accuracy: {accuracy} """
+
+# 8. Save the cross validate predictions to csv file
+predictions_cv = pd.DataFrame(y_pred_cv, columns=['predictions_cv'])
+predictions_cv.to_csv('Artifacts/Predictions/logreg_predictions_cv.csv', index=False)
+
+# 9. Determine which model is the most accurate
+if accuracy > accuracy_cv:
+    most_accurate_model = logreg
+    print("The original model is the most accurate.")
+else:
+    most_accurate_model = logreg_cv
+    print("The cross-validated model is the most accurate.")
+"""Answer: The cross-validated model is the most accurate. """
+
+# 10. Hyperparameter tuning
+# Define the parameter grid
+param_grid = {
+    'C': np.logspace(-3, 3, 10),  # exploring a different range and granularity for C
+    'penalty': ['l2'],  # only using l2 penalty
+    'solver': ['newton-cg', 'lbfgs', 'liblinear']  # adding a new hyperparameter to explore
+}
+
+# Create a GridSearchCV object
+grid_search = GridSearchCV(most_accurate_model, param_grid, cv=5, scoring='accuracy')
+
+# Fit the GridSearchCV object to the data
+grid_search.fit(X_train, y_train)
+
+# Get the best parameters
+best_params = grid_search.best_params_
+print(f"Best parameters: {best_params}")
+""" Answer: Best parameters: {parameters} """
+
+# Get the best score
+best_score = grid_search.best_score_
+print(f"Best score: {best_score}")
+""" Answer: Best score: {score}"""
+
+# 11. Retrain the most accurate model
+# Update the most accurate model with the best parameters and retrain
+most_accurate_model = LogisticRegression(C=best_params['C'], penalty=best_params['penalty'])
+most_accurate_model.fit(X_train, y_train)
+
+# Make predictions with the retrained model
+y_pred_updated = most_accurate_model.predict(X_test)
+
+# Check the accuracy of the retrained model
+accuracy_updated = accuracy_score(y_test, y_pred_updated)
+print(f"Updated Model Accuracy: {accuracy_updated}")
+""" Answer: Updated Model Accuracy:{accuracy} """
+
+# Save the updated predictions to a csv file
+predictions_updated = pd.DataFrame(y_pred_updated, columns=['predictions_updated'])
+predictions_updated.to_csv('Artifacts/Predictions/logreg_predictions_updated.csv', index=False)
+
+# Determine which model is the most accurate
+if accuracy_updated > accuracy and accuracy_updated > accuracy_cv:
+    print("The updated model is the most accurate.")
+elif accuracy > accuracy_cv:
+    print("The original model is the most accurate.")
+else:
+    print("The cross-validated model is the most accurate.")
+""" Answer: The cross-validated model is the most accurate. """
+
+# 12. Create feature importance values for the most accurate model
+feature_importance_updated = pd.DataFrame({'feature': X.columns, 'importance': most_accurate_model.coef_[0]})
+feature_importance_updated = feature_importance_updated.sort_values('importance', ascending=False)
+
+# 13. Save the updated feature importance values to a csv file
+feature_importance_updated.to_csv('Artifacts/Feature Importance/most_accurate_model_feature_importance_updated.csv', index=False)
+
+# 14. Save the model that is the most accurate to a pickle file named 'Model_1.pkl'
+with open('Artifacts/Models/Model_1.pkl', 'wb') as file:
+    pickle.dump(most_accurate_model, file)
 
 
 
 
-# Calculate the accuracy score for the predictions of the model
-accuracy = 0.85  # Placeholder for accuracy score
-print("Accuracy Score for Predictions:", accuracy)
-
-""" 
-# Answer:
-    Accuracy Score for Predictions: {accuracy}
-
-# Insight Gained: 
-    - 
-"""
-
-# Save the predictions to a CSV file
-predictions_df = pd.DataFrame({'Actual': y_test, 'Predicted': y_pred})
-predictions_df.to_csv('predictions.csv', index=False)
 
 
-#Cross validation model 1
-""" 
-    # Define the cross-validation strategy
-"""
-skf = StratifiedKFold(n_splits=5, shuffle=True, random_state=42)
 
-# Perform cross-validation
-""" 
-    # Perform cross-validation and get predictions
-"""
-cv_predictions = cross_val_predict(model, X, y, cv=skf)
-
-# Calculate the mean validation accuracy score
-
-mean_accuracy = accuracy_score(y, cv_predictions)
-print("Mean validation accuracy score:", mean_accuracy)
-
-"""
-# Answers:
-
-
-    Mean validation accuracy score: {mean_accuracy}
     
-# Insight Gained: 
-    - 
-"""
-
-# Save the cross-validation predictions to CSV file
-cv_predictions_df = pd.DataFrame({'Actual': y, 'Predicted': cv_predictions})
-cv_predictions_df.to_csv('cross_validation_predictions.csv', index=False)
-
-
-# Save the trained model to a pickle file
-with open('model.pkl', 'wb') as f:
-    pickle.dump(model, f)
